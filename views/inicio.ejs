@@ -1,0 +1,127 @@
+<div class="modal fade" id="formularioModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header" style="text-align:center">
+        <strong class="modal-title">AGREGAR NUEVO LIBRO</strong>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form id="formulario" action="/add" method="POST">
+          <div class="form-group">
+            <label for="nombre" class="col-lg-2 control-label">Nombre</label>
+            <div class="col-lg-10">
+              <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+          </div>
+
+          <br/><br/>
+
+          <div class="form-group">
+            <label for="stock" class="col-lg-2 control-label">Unidades</label>
+            <div class="col-lg-10">
+              <input type="number" class="form-control" id="stock" name="stock" required>
+            </div>
+          </div>
+
+          <br/><br/>
+
+          <div class="form-group">
+            <label for="version" class="col-lg-2 control-label">Version</label>
+            <div class="col-lg-10">
+              <select class="form-control" id="version" name="version" required>
+          		<option>Lujo</option>
+          		<option>Bolsillo</option>
+          	</select>
+            </div>
+          </div>
+
+          <br/><br/>
+
+        </form>
+
+      </div>
+      <div class="modal-footer" style="text-align:center">
+        <button type="submit" class="btn btn-success" form="formulario">Aceptar
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+          Volver <i class="fa fa-undo" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+
+  <div class="panel-heading" style="text-align:center">SISTEMA DE LIBROS - EXPERIENCIA 4</div>
+  <div class="panel-body" style="text-align:center">
+
+    <div class="row">
+      <div class="col-md-12">
+        <i><i class="fa fa-info-circle" aria-hidden="true"></i> Para modificar la descontinuacion de un libro, precione el
+        botón amarillo correspondiente.</i>
+      </div>
+
+      <br/><br/>
+
+      <div class="col-md-12">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#formularioModal">Agregar libro <i class="fa fa-plus-circle" aria-hidden="true"></i> </button>
+        <br/><br/>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped ">
+        <thead class="thead-default">
+          <tr class="headerTablaModal">
+            <th style="text-align:center">Nombre</th>
+            <th style="text-align:center">Stock Inicial</th>
+            <th style="text-align:center">Unidades actuales</th>
+            <th style="text-align:center">Version</th>
+            <th style="text-align:center">Descontinuado</th>
+            <th style="text-align:center">Vender</th>
+            <th style="text-align:center">Devolver</th>
+            <th style="text-align:center">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody align="center">
+          <% _.each(libros, function(libro) { %>
+            <tr>
+              <td>
+                <%= libro.nombre %>
+              </td>
+              <td>
+                <%= libro.stock %>
+              </td>
+              <td>
+                <%= libro.stockAux %>
+              </td>
+              <td>
+                <%= libro.version %>
+              </td>
+              <td>
+                <%= libro.estado %> -
+                  <a class="btn btn-warning btn-sm" href="#" onclick="validarOpcion(<%=libro.id%>)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              </td>
+              <td>
+                <a class="btn btn-info" href="#" onclick="validarVenta(<%=libro.id%>,<%=libro.stock%>,<%=libro.stockAux%>)"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>
+              </td>
+              <td>
+                <a class="btn btn-primary" href="#" onclick="validarDevol(<%=libro.id%>,<%=libro.stock%>,<%=libro.stockAux%>)"><i class="fa fa-exchange" aria-hidden="true"></i></a>
+              </td>
+              <td>
+                <a class="btn btn-danger" href="/eliminar/<%=libro.id%>"><i class="fa fa-trash" aria-hidden="true"></i> </a>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>
